@@ -10,6 +10,7 @@ function greet(name) {
 }
 
 console.log(greet("Ana"));
+console.log(greet("Bob"));
 
 // TODO 1: call greet with your own name and log what it gives back.
 
