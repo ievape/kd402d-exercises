@@ -1,7 +1,7 @@
 // Exercise 8: bug hunt
 
 // The octave arrives as text, the way it would from a text box on a web page.
-const typedOctave = "4";
+const typedOctave = 4;
 const noteUp = "C" + (typedOctave + 1);
 const noteDown = "C" + (typedOctave - 1);
 
@@ -12,6 +12,9 @@ function exercise8(start) {
   synth.triggerAttackRelease(noteDown, "4n", start);
   synth.triggerAttackRelease(noteUp, "4n", start + 0.5);
 }
+
+console.log(noteUp);
+console.log(noteDown);
 
 // ---------- You don't need to change anything below this line ----------
 
