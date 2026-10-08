@@ -8,10 +8,14 @@ const middleNote = "e4";
 const topNote = "g4";
 
 function exercise7(start) {
-  synth.triggerAttackRelease(bottomNote, "2n", start);
-  synth.triggerAttackRelease(middleNote, "2n", start);
-  synth.triggerAttackRelease(topNote, "2n", start);
+  chordSynth.triggerAttackRelease(bottomNote, "2n", start);
+  chordSynth.triggerAttackRelease(middleNote, "2n", start);
+  chordSynth.triggerAttackRelease(topNote, "2n", start);
 }
+const chord = bottomNote + " " + middleNote + " " + topNote;
+console.log(chord);
+console.log(chord.toUpperCase());
+console.log(chord.length);
 
 // TODO 7a: play exercise 7 as it is. How many notes do you hear? Read the red error in the console.
 // TODO 7b: in exercise7, change synth to chordSynth in all three calls. Play again.
