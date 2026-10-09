@@ -2,8 +2,8 @@
 // A comparison is a question. Its answer is true or false.
 
 function exercise2(start) {
-  let duration = "8n";
-  let bpm = 90;
+  let duration = "4n";
+  let bpm = 120;
 
   synth.triggerAttackRelease("E4", duration, start);
 
@@ -14,6 +14,8 @@ function exercise2(start) {
   // TODO 2a: log two more questions the same way. Say each one out loud, and predict its answer:
   //            duration !== "4n"   is duration not 4n?
   //            bpm > 100           is the tempo more than 100?
+  console.log("Exercise 2: is duration not 4n? " + (duration !== "4n"));
+  console.log("Exercise 2: is the tempo more than 100? " + (bpm > 100));
   // TODO 2b: change duration to "4n" and bpm to 120. Predict which answers flip, then press again.
 }
 
