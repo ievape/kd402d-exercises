@@ -63,6 +63,48 @@ function pointerLeave(event) {
 
 function pointerMove(event) {
   // TODO 12a, 13a go here
+  let normX = event.clientX / window.innerWidth;
+  let normY = event.clientY / window.innerHeight;
+  let now = Date.now();
+  let distance = Math.hypot(normX - lastX, normY - lastY);   // in screens
+  let seconds = (now - lastTime) / 1000;
+  lastX = normX;
+  lastY = normY;
+  lastTime = now;
+  if (seconds === 0) {
+   return;
+ }
+ if (!inside) {
+  return;
+ }
+  let speed = distance / seconds;                             // screens per second
+   console.log(speed);
+
+  speeds.push(speed);
+  setTimeout(forgetOldest, 500);
+  useAverage();
+  console.log(speeds.length);
+
+  function forgetOldest() {
+  speeds.shift();
+  useAverage();
+  }
+
+  function useAverage() {
+    let total = 0;
+    for (let i = 0; i < speeds.length; i++) {
+      total = total + speeds[i];
+}
+    let average = 0;
+      if (speeds.length > 0) {
+      average = total / speeds.length;
+  }
+  let volume = -30 + average * 10; // -30 is nearly silent, 0 is full
+  if (volume > 0) {
+  volume = 0;
+   }
+  synth.volume.value = volume;
+}
 }
 
 // ---------- Setup ----------
