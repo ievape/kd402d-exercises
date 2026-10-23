@@ -27,9 +27,9 @@ let speeds = [];
 //            }
 // TODO 9c: work out the average of speeds with a for loop, and use it instead of speed:
 //            synth.detune.value = average * 300;
-// 9d Listen with a steady movement. In a comment: smoother than block 3? Why?
+// 9d Listen with a steady movement. In a comment: smoother than block 3? Why? Smoother, because it doesn't jump so much, only averaged values are taken into account.
 // 9e In a comment: this morning, averaging every speed ever stored got slower and slower to react.
-//    Why does keeping 10 fix that?
+//    Why does keeping 10 fix that? Because it doesn't overcrowd program memory.
 
 // ---------- Exercise 10: flick, then stop dead ----------
 // 10a Predict, in a comment: flick the pointer fast across the screen, then hold your hand
@@ -76,8 +76,26 @@ function pointerMove(event) {
   lastY = normY;
   lastTime = now;
 
-  synth.detune.value = speed * 300;
   // TODO 9a, 9b and 9c go here
+  speeds.push(speed);
+  setTimeout(forgetOldest, 2000);
+  useAverage();
+  console.log(speeds.length);
+}
+  function forgetOldest() {
+  speeds.shift();
+  useAverage();
+  }
+  function useAverage() {
+  let total = 0;
+  for (let i = 0; i < speeds.length; i++) {
+  total = total + speeds[i];
+}
+  let average = 0;
+  if (speeds.length > 0) {
+   average = total / speeds.length;
+  }
+  synth.detune.value = average * 300;
 }
 
 // ---------- Setup ----------
