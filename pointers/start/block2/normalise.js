@@ -12,14 +12,18 @@ const synth = new Tone.Synth().toDestination();
 // ---------- State ----------
 let octave = 4;
 
+
 // ---------- Exercise 5: how far left or right? ----------
 // TODO 5a: in pointerMove, log event.clientX. Move to the far right edge: what's the biggest number?
 // 5b Make the browser window narrower and do it again. In a comment: why is the number different?
+// Because the there are fewer pixels for the pointer to travel along the x axis.
 // TODO 5c: normalise it: let normX = event.clientX / window.innerWidth;  and log normX instead.
 // 5d Predict, in a comment: what does the left edge read? The middle? The right edge?
+// It shows pointer value between 0 and 1. It does't change when I resize the screen.
 //    Then resize the window again and check that the right edge still reads (nearly) 1.
 // TODO 5e: do the same for up and down: normY, from event.clientY and window.innerHeight.
 //          In a comment: where is normY 0, at the top or the bottom?
+// Because the values on y axis increase in top-down direction.
 
 // ---------- Exercise 6: stretch it onto detune ----------
 // synth.detune.value bends the note that's playing, in cents.
@@ -27,6 +31,7 @@ let octave = 4;
 // TODO 6a: in pointerMove: synth.detune.value = normX * 1200;
 //          Hold the "a" key with one hand and move the pointer with the other.
 // 6b Predict, then try: normX * 100. Then normX * 2400. In a comment: what changes, and what stays the same?
+// the note i play stays the same, but the range at which the note is detuned changes -- 100 by one note, 2400 by two octaves.
 // TODO 6c: put the note itself in the middle of the screen: an octave down at the left edge,
 //          an octave up at the right. Hint: start at -1200, and stretch over 2400.
 // 6d Keep the range you like best. In a comment: why that one?
@@ -71,6 +76,12 @@ function stopNote(event) {
 // ---------- Pointer ----------
 function pointerMove(event) {
   // TODO 5a, 5c, 5e and 6a go here
+  console.log(event.clientX);
+  let normX = event.clientX / window.innerWidth;
+  console.log(normX);
+  let normY = event.clientY / window.innerHeight;
+  console.log(normY);
+  synth.detune.value = -1200 + normX * 2400;
 }
 
 // ---------- Setup ----------
