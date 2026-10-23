@@ -59,8 +59,22 @@ function keyDown(event) {
 function pointerMove(event) {
   let normX = event.clientX / window.innerWidth;
   let normY = event.clientY / window.innerHeight;
+  let now = Date.now();
+  let distance = Math.hypot(normX - lastX, normY - lastY);   // in screens
+  let seconds = (now - lastTime) / 1000;
+  if (seconds === 0) {
+   return;
+ }
+  let speed = distance / seconds;                             // screens per second
+   console.log(speed);
+  lastX = normX;
+  lastY = normY;
+  lastTime = now;
   // TODO 7a and 8a go here
+  synth.detune.value = speed * 300;
 }
+
+
 
 // ---------- Setup ----------
 window.addEventListener("keydown", keyDown);
