@@ -8,6 +8,7 @@ import { createShape } from "./shape.js";
 
 // ---------- Settings ----------
 const note = "C4"; // the note the shape plays
+const noteTwo = "G4";
 
 // ---------- State ----------
 const shape = createShape(); // one shape, made by shape.js
@@ -24,10 +25,27 @@ const synth = new Tone.Synth().toDestination();
 //            shape.setPosition(0.5, 0.5);
 // 1b Predict, in a comment: setPosition(0.5, 0.5) puts the shape's top-left corner where? And (1, 1)?
 //    Hint: these are the same 0 to 1 numbers as this morning. Check, then put it back.
+//
+// Since the first number represents a value in x axis that goes from 0 to 1 going from left to right,
+// and the second number represents a value in y axis increasing in top-down direction, at (1, 1)
+// the circle should be positioned at the bottom right corner.
 
 // ---------- Exercise 2: a sound when you arrive ----------
 // TODO 2a: write a function pointerEnter(event) that plays the note once:
 //            synth.triggerAttackRelease(note, "8n");
+function pointerEnter (event) {
+synth.triggerAttack(note, "8n");
+}
+function pointerLeave (event) {
+synth.triggerRelease();
+}
+function pointerDown (event) {
+synth.triggerAttack(noteTwo, "8n");
+}
+function pointerUp (event) {
+synth.triggerRelease();
+}
+
 //          and listen for "pointerenter" on shape.element (not on shape) in setup.
 // 2b Move onto the shape before clicking anywhere. Why is there no sound?
 //    startSound below is already listening for a click anywhere: click once, and try again.
@@ -37,13 +55,16 @@ const synth = new Tone.Synth().toDestination();
 // TODO 3a: change pointerEnter to start the note and keep it going: synth.triggerAttack(note);
 //          and write pointerLeave to stop it: synth.triggerRelease();
 // 3b Predict, in a comment: what happens if you forget the pointerleave listener? Try it.
+// The the note keeps playing after the pointer is moved away from it.
 
 // ---------- Exercise 4: press to play instead ----------
 // TODO 4a: play the note on "pointerdown" on the shape, and stop it on "pointerup".
 //          Comment out the enter and leave listeners while you try it.
 // 4b Press on the shape, drag off, and let go outside. What happens to the note? Why?
+// The note stops playing because event listener listens only while the pointer is on thse shape.
 // TODO 4c: fix it: also stop the note on "pointerleave".
 // 4d In a comment: hovering or pressing, which feels more like an instrument to you?
+// Pressing feels more like an instrument, but hovering it is more satisfying when the note playes upon hover.
 
 // ---------- Controls (Event Handlers) ----------
 function startSound(event) {
@@ -53,8 +74,16 @@ function startSound(event) {
 // ---------- Setup ----------
 function setup() {
   // TODO 1a goes here
+   shape.setSize(150);
+   shape.setColour(200, 80, 50);   // hue 0 to 360, saturation, lightness
+   shape.setPosition(0.5, 0.5);
 
   window.addEventListener("pointerdown", startSound);
+  shape.element.addEventListener("pointerenter", pointerEnter);
+  shape.element.addEventListener("pointerleave", pointerLeave);
+  shape.element.addEventListener("pointerdown", pointerDown);
+  shape.element.addEventListener("pointerup", pointerUp);
+
   // TODO 2a, 3a and 4a: listen on shape.element here
 }
 
